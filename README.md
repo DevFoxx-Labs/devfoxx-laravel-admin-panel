@@ -1,44 +1,37 @@
 # DevFoxx Laravel Admin Panel Package
 
-This package can now be used in **two ways**:
+`devfoxx/devfoxx-laravel-admin-panel` is a broader **Laravel admin panel starter/package**, not just a gallery module.
 
-1. **package mode** – install the reusable gallery/admin package
-2. **full-stack mode** – publish the current app structure, routes, migrations, and React/Inertia UI into a fresh Laravel app
+It currently bundles or scaffolds the following areas:
 
-## What is included
+- gallery and media library management
+- blog posts, categories, and comments
+- testimonials management
+- CMS pages and public page rendering
+- notification campaigns, templates, retry flows, and webhooks
+- access control for roles, users, and permissions
+- site settings and SEO settings
+- auth/profile and push-device related flows
+- Blade fallback UI and package-owned React/Inertia runtime UI
+- optional full-stack starter scaffolding for fresh Laravel applications
 
-- reusable service provider
-- package config
-- package routes
-- gallery model + migration
-- Blade admin/public fallback UI
-- optional React/Inertia UI publishing
-- optional full app scaffolding publishing from the current project structure
-- install command: `php artisan devfoxx-admin-panel:install`
+> At the moment, **Gallery** is the first fully package-owned runtime module. The rest of the admin suite is already included through the `full-stack` scaffolding layer and can be published into fresh Laravel apps.
 
-## Local development
+Repository: `https://github.com/DevFoxx-Labs/devfoxx-laravel-admin-panel`
 
-For monorepo or demo-app development, consume the package through a Composer path repository:
+---
 
-```json
-{
-  "repositories": [
-    {
-      "type": "path",
-      "url": "packages/devfoxx/admin-panel",
-      "options": {
-        "symlink": true
-      }
-    }
-  ]
-}
-```
+## Requirements
 
-Then require it in the host app and test changes locally with normal Laravel and Vite workflows.
+- PHP `^8.2`
+- Laravel `^11.0 | ^12.0`
+- Node.js + npm for React/Inertia builds
 
-## Install modes
+---
 
-### 1) Reusable package mode
+## Installation
+
+### 1) Standard package mode
 
 ```bash
 composer require devfoxx/devfoxx-laravel-admin-panel
@@ -47,11 +40,9 @@ php artisan migrate
 php artisan storage:link
 ```
 
-### 2) Full app + current UI mode
+### 2) Full-stack mode
 
-> Best for a **fresh Laravel app** where you want the same structure and UI as this project.
->
-> **Important:** this mode publishes files as copies into the host app. Later package updates will not automatically change those copied files unless you publish again with `--force`.
+Use this on a **fresh Laravel app** when you want the current DevFoxx structure and UI.
 
 ```bash
 composer require devfoxx/devfoxx-laravel-admin-panel
@@ -63,30 +54,36 @@ npm install @inertiajs/react @headlessui/react antd @ant-design/icons axios reac
 npm run build
 ```
 
-Then set in your `.env` or published config:
+Then enable the React/Inertia UI:
 
 ```env
 DEVFOXX_ADMIN_PANEL_UI_STACK=inertia
 ```
 
-## Published content in full-stack mode
+> `--full-stack` publishes files as copies into the host app. Those copies do not auto-update unless re-published with `--force`.
 
-- `app/Http`, `app/Models`, `app/Services`, `app/Jobs`, `app/Mail`
-- `config/*.php`
-- `database/migrations`, `database/seeders`
-- `resources/js`, `resources/css`, `resources/views`
-- `routes/*.php`
-- `vite.config.js`, `tailwind.config.js`, `postcss.config.js`, `jsconfig.json`
+---
 
-## Package-owned React/Inertia runtime assets
+## Module coverage at a glance
 
-When you set:
+| Area | Current status | Notes |
+|---|---|---|
+| Gallery / media library | **Native package module** | Fully wired into the package with Blade and React/Inertia runtime UI |
+| Blog / categories / comments | **Full-stack scaffold included** | Published into fresh apps through `--full-stack` |
+| CMS pages / public page rendering | **Full-stack scaffold included** | Includes admin page management and dynamic public routes |
+| Testimonials | **Full-stack scaffold included** | Includes CRUD, featured toggles, restore, and ordering |
+| Notifications / campaigns / templates / webhooks | **Full-stack scaffold included** | Includes campaign management, retries, and webhook endpoints |
+| Access control / roles / users | **Full-stack scaffold included** | Built around permissions and admin access flows |
+| Site settings / SEO | **Full-stack scaffold included** | Settings controllers, config, and related admin UI |
+| Auth / profile / push devices | **Full-stack scaffold included** | Included in the starter structure for the host app |
 
-```env
-DEVFOXX_ADMIN_PANEL_UI_STACK=inertia
-```
+This means the package already represents a broader **admin panel ecosystem**, while the Gallery module is currently the most package-native runtime feature.
 
-the package renders these runtime-owned Inertia pages directly from the installed package:
+---
+
+## Package-owned React/Inertia runtime UI
+
+When `DEVFOXX_ADMIN_PANEL_UI_STACK=inertia` is enabled, the package renders these Inertia pages from the installed package itself:
 
 - `Vendor/AdminPanel/Gallery/Index`
 - `Vendor/AdminPanel/Admin/Gallery/Index`
@@ -99,69 +96,126 @@ import { withAdminPanelPages } from '../../vendor/devfoxx/devfoxx-laravel-admin-
 const pages = withAdminPanelPages(import.meta.glob('./Pages/**/*.jsx'));
 ```
 
-This means UI code stays in the package under `vendor/devfoxx/devfoxx-laravel-admin-panel/resources/js/**` and arrives through normal package updates. After updating the package, rebuild frontend assets:
+After updating the package in a consuming app, rebuild frontend assets:
 
 ```bash
 composer update devfoxx/devfoxx-laravel-admin-panel
 npm run build
 ```
 
-> Local app pages still override package pages if you keep the same component names in `resources/js/Pages`.
+> Local app pages can still override package pages if they use the same component names under `resources/js/Pages`.
 
-## Default URLs
+---
 
-- public gallery: `/package-gallery`
-- admin gallery: `/package-admin/gallery`
+## Available routes and modules
 
-You can change these in `config/admin-panel.php` after publishing the config.
+### Package-native routes today
 
-## Keeping the package updated when this app changes
+- Public gallery: `/package-gallery`
+- Admin gallery: `/package-admin/gallery`
 
-### Recommended workflow
+These can be customized in the published `config/admin-panel.php`.
 
-Use the **package as the source of truth**.
+### Full-stack routes available after scaffold publish
 
-- build reusable code in `packages/devfoxx/admin-panel`
-- test it in this app through the local Composer path repository
-- release a new package version
-- run `composer update devfoxx/devfoxx-laravel-admin-panel` in other apps
+Once you install with `--full-stack`, the starter also includes routes and UI for areas such as:
 
-### If you changed the app first
+- `/admin/access-control`
+- `/admin/settings`
+- `/admin/blogs`
+- `/admin/categories`
+- `/admin/pages`
+- `/admin/testimonials`
+- `/admin/notifications`
+- `/blog`
+- `/gallery`
+- `/testimonials`
+- dynamic CMS pages via `/{path}`
 
-Sync the current app back into the package stubs with:
+---
+
+## Useful commands
+
+### Install package resources
+
+```bash
+php artisan devfoxx-admin-panel:install
+```
+
+### Sync publishable stubs from the host app back into the package
 
 ```bash
 php artisan devfoxx-admin-panel:sync-stubs --clean
 ```
 
-Then:
+---
 
-```bash
-git add packages/devfoxx/admin-panel
-git commit -m "Sync package from app changes"
-git tag v1.0.1
-git push origin master --tags
+## Local development
+
+If you want to test this package from another local Laravel app, add a Composer path repository:
+
+```json
+{
+  "repositories": [
+    {
+      "type": "path",
+      "url": "../devfoxx-laravel-admin-panel",
+      "options": {
+        "symlink": true
+      }
+    }
+  ]
+}
 ```
 
-In other Laravel apps:
+Then require it in the host app:
+
+```bash
+composer require devfoxx/devfoxx-laravel-admin-panel:@dev
+```
+
+---
+
+## Release workflow
+
+Use this repository as the **source of truth**.
+
+### Validate before release
+
+```bash
+composer validate --strict
+composer test
+```
+
+### Publish a new release
+
+```bash
+git add .
+git commit -m "Prepare release"
+git tag v1.0.0
+git push origin main --tags
+```
+
+### Update consumer apps
 
 ```bash
 composer update devfoxx/devfoxx-laravel-admin-panel
+npm run build
 ```
 
-## Publish to GitHub and Packagist
+---
 
-1. Move this package folder into its own repository, for example `devfoxx/devfoxx-laravel-admin-panel`.
-2. Push the repository to GitHub.
-3. Create a release tag:
+## GitHub and Packagist publishing
 
-```bash
-git tag v1.0.0
-git push origin v1.0.0
-```
+1. Push this repository to GitHub:
+   - `https://github.com/DevFoxx-Labs/devfoxx-laravel-admin-panel`
+2. Ensure the repository is **public**.
+3. Make sure the package code is available on the default branch (`main`).
+4. Create and push a semantic version tag such as `v1.0.0`.
+5. Submit the GitHub repository URL to [Packagist](https://packagist.org/packages/submit).
+6. Enable the Packagist GitHub webhook for automatic sync on future pushes.
 
-4. Submit the GitHub repository to [Packagist](https://packagist.org/packages/submit).
-5. Install from other apps with:
+Install in other apps with:
 
 ```bash
 composer require devfoxx/devfoxx-laravel-admin-panel
