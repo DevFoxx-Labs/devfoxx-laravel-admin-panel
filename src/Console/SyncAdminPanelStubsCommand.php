@@ -77,7 +77,7 @@ class SyncAdminPanelStubsCommand extends Command
         $this->line('Next steps:');
         $this->line('  1. Review the diff under packages/devfoxx/admin-panel');
         $this->line('  2. Commit and tag the package release');
-        $this->line('  3. Update consumer apps with composer update dev-karunendu-mishra/devfoxx-laravel-admin-panel');
+        $this->line('  3. Update consumer apps with composer update devfoxx/devfoxx-laravel-admin-panel');
 
         return self::SUCCESS;
     }

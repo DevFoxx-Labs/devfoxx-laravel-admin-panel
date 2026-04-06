@@ -29,7 +29,7 @@ git push origin main --tags
 6. If this is the first publish, create the standalone GitHub repo and push it:
 
 ```bash
-git remote add origin https://github.com/dev-karunendu-mishra/devfoxx-laravel-admin-panel.git
+git remote add origin https://github.com/devfoxx/devfoxx-laravel-admin-panel.git
 git push -u origin main --tags
 ```
 

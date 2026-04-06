@@ -1,5 +1,5 @@
 {
-    "name": "dev-karunendu-mishra/devfoxx-laravel-admin-panel",
+    "name": "devfoxx/devfoxx-laravel-admin-panel",
     "description": "Reusable Laravel admin panel package with gallery management and React/Inertia runtime UI.",
     "type": "library",
     "license": "MIT",
@@ -10,7 +10,7 @@
         "react",
         "inertia"
     ],
-    "homepage": "https://github.com/dev-karunendu-mishra/devfoxx-laravel-admin-panel",
+    "homepage": "https://github.com/devfoxx/devfoxx-laravel-admin-panel",
     "authors": [
         {
             "name": "DevFoxx",
@@ -18,8 +18,8 @@
         }
     ],
     "support": {
-        "issues": "https://github.com/dev-karunendu-mishra/devfoxx-laravel-admin-panel/issues",
-        "source": "https://github.com/dev-karunendu-mishra/devfoxx-laravel-admin-panel"
+        "issues": "https://github.com/devfoxx/devfoxx-laravel-admin-panel/issues",
+        "source": "https://github.com/devfoxx/devfoxx-laravel-admin-panel"
     },
     "require": {
         "php": "^8.2",

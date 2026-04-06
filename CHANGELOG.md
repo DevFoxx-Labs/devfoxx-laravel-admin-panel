@@ -1,6 +1,6 @@
 # Changelog
 
-All notable changes to `dev-karunendu-mishra/devfoxx-laravel-admin-panel` will be documented in this file.
+All notable changes to `devfoxx/devfoxx-laravel-admin-panel` will be documented in this file.
 
 ## [1.0.0] - 2026-04-06
 

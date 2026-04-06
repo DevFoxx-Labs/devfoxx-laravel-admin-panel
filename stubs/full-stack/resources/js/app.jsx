@@ -6,7 +6,7 @@ import { createInertiaApp } from '@inertiajs/react';
 import { App as AntdApp, ConfigProvider } from 'antd';
 import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
 import { createRoot, hydrateRoot } from 'react-dom/client';
-import { withAdminPanelPages } from '../../vendor/dev-karunendu-mishra/devfoxx-laravel-admin-panel/resources/js/inertia';
+import { withAdminPanelPages } from '../../vendor/devfoxx/devfoxx-laravel-admin-panel/resources/js/inertia';
 
 const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
 

@@ -41,7 +41,7 @@ Then require it in the host app and test changes locally with normal Laravel and
 ### 1) Reusable package mode
 
 ```bash
-composer require dev-karunendu-mishra/devfoxx-laravel-admin-panel
+composer require devfoxx/devfoxx-laravel-admin-panel
 php artisan devfoxx-admin-panel:install --with-migrations
 php artisan migrate
 php artisan storage:link
@@ -54,7 +54,7 @@ php artisan storage:link
 > **Important:** this mode publishes files as copies into the host app. Later package updates will not automatically change those copied files unless you publish again with `--force`.
 
 ```bash
-composer require dev-karunendu-mishra/devfoxx-laravel-admin-panel
+composer require devfoxx/devfoxx-laravel-admin-panel
 php artisan devfoxx-admin-panel:install --full-stack --with-ui --with-migrations --force
 php artisan migrate --seed
 php artisan storage:link
@@ -94,15 +94,15 @@ the package renders these runtime-owned Inertia pages directly from the installe
 In the host app, make sure `resources/js/app.jsx` resolves package pages:
 
 ```jsx
-import { withAdminPanelPages } from '../../vendor/dev-karunendu-mishra/devfoxx-laravel-admin-panel/resources/js/inertia';
+import { withAdminPanelPages } from '../../vendor/devfoxx/devfoxx-laravel-admin-panel/resources/js/inertia';
 
 const pages = withAdminPanelPages(import.meta.glob('./Pages/**/*.jsx'));
 ```
 
-This means UI code stays in the package under `vendor/dev-karunendu-mishra/devfoxx-laravel-admin-panel/resources/js/**` and arrives through normal package updates. After updating the package, rebuild frontend assets:
+This means UI code stays in the package under `vendor/devfoxx/devfoxx-laravel-admin-panel/resources/js/**` and arrives through normal package updates. After updating the package, rebuild frontend assets:
 
 ```bash
-composer update dev-karunendu-mishra/devfoxx-laravel-admin-panel
+composer update devfoxx/devfoxx-laravel-admin-panel
 npm run build
 ```
 
@@ -124,7 +124,7 @@ Use the **package as the source of truth**.
 - build reusable code in `packages/devfoxx/admin-panel`
 - test it in this app through the local Composer path repository
 - release a new package version
-- run `composer update dev-karunendu-mishra/devfoxx-laravel-admin-panel` in other apps
+- run `composer update devfoxx/devfoxx-laravel-admin-panel` in other apps
 
 ### If you changed the app first
 
@@ -146,12 +146,12 @@ git push origin master --tags
 In other Laravel apps:
 
 ```bash
-composer update dev-karunendu-mishra/devfoxx-laravel-admin-panel
+composer update devfoxx/devfoxx-laravel-admin-panel
 ```
 
 ## Publish to GitHub and Packagist
 
-1. Move this package folder into its own repository, for example `dev-karunendu-mishra/devfoxx-laravel-admin-panel`.
+1. Move this package folder into its own repository, for example `devfoxx/devfoxx-laravel-admin-panel`.
 2. Push the repository to GitHub.
 3. Create a release tag:
 
@@ -164,5 +164,5 @@ git push origin v1.0.0
 5. Install from other apps with:
 
 ```bash
-composer require dev-karunendu-mishra/devfoxx-laravel-admin-panel
+composer require devfoxx/devfoxx-laravel-admin-panel
 ```

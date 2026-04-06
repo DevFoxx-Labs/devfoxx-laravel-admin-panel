@@ -21,7 +21,7 @@
 <body>
     <div class="container">
         <h1>Package Gallery</h1>
-        <p>This page is served from the reusable `dev-karunendu-mishra/devfoxx-laravel-admin-panel` package.</p>
+        <p>This page is served from the reusable `devfoxx/devfoxx-laravel-admin-panel` package.</p>
 
         <div class="stats">
             <div class="stat"><strong>Total</strong><div>{{ $stats['total'] }}</div></div>
