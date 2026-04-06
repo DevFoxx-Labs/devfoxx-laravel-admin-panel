@@ -3,6 +3,7 @@
 namespace DevFoxx\AdminPanel\Console;
 
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Schema;
 
 class InstallAdminPanelCommand extends Command
 {
@@ -52,14 +53,20 @@ class InstallAdminPanelCommand extends Command
         $permissionName = (string) config('admin-panel.permission', '');
 
         if ($permissionName !== '' && class_exists('Spatie\\Permission\\Models\\Permission')) {
-            $permissionModel = 'Spatie\\Permission\\Models\\Permission';
-            $permissionModel::findOrCreate($permissionName);
+            $permissionsTable = (string) config('permission.table_names.permissions', 'permissions');
 
-            if (class_exists('Spatie\\Permission\\PermissionRegistrar')) {
-                app('Spatie\\Permission\\PermissionRegistrar')->forgetCachedPermissions();
+            if (Schema::hasTable($permissionsTable)) {
+                $permissionModel = 'Spatie\\Permission\\Models\\Permission';
+                $permissionModel::findOrCreate($permissionName);
+
+                if (class_exists('Spatie\\Permission\\PermissionRegistrar')) {
+                    app('Spatie\\Permission\\PermissionRegistrar')->forgetCachedPermissions();
+                }
+
+                $this->components->info("Permission [{$permissionName}] is ready.");
+            } else {
+                $this->components->warn("Permission table [{$permissionsTable}] does not exist yet. Run php artisan migrate first, then seed or create permissions.");
             }
-
-            $this->components->info("Permission [{$permissionName}] is ready.");
         }
 
         $this->newLine();
